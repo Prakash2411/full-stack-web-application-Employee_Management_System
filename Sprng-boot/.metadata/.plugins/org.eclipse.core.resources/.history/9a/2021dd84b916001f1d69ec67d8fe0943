@@ -1,0 +1,83 @@
+package com.example.restApi.service;
+
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.restApi.models.User;
+import com.example.restApi.repo.UserRepo;
+
+@Service
+public class UserService {
+	
+	@Autowired
+	UserRepo userrepo;
+	
+		AtomicInteger automicInteger = new AtomicInteger();
+	
+	public User create(User user) {
+		return userrepo.save(user);
+	}
+	
+	public Iterable<User> getAll(){
+		return this.userrepo.findAll();
+	}
+	
+	public Optional<User> getById(Integer id){
+		return this.userrepo.findById(id);
+		
+	}
+	
+//	public User update(Integer id, User updateUser) {
+//		Optional<User> existinguser = this.getById(id);
+//		
+//		existinguser.
+//		
+//		return user;
+//		
+//	}
+	
+	public User update(Integer id, User user) {
+		this.getById(id);
+		this.update(id, user);
+		return this.userrepo.save(user);
+		
+	}
+	
+//	public User update(Integer id, User user) {
+//		Optional<User> existingUser = getById(id);
+//		if(existingUser.isPresent()) {
+//			User existUser = existingUser.get();
+//			existUser.setAddress(user.getAddress());
+//			existUser.setContact_Number(user.getContact_Number());
+//			existUser.setDate_of_Birth(user.getDate_of_Birth());
+//			existUser.setDepartment(user.getDepartment());
+//			existUser.setEmployee_ID(user.getEmployee_ID());
+//			existUser.setFirst_Name(user.getFirst_Name());
+//			existUser.setGender(user.getGender());
+//			existUser.setLast_Name(user.getLast_Name());
+//			existUser.setNationality(user.getNationality());
+//			existUser.setPosition(user.getPosition());
+//			
+//			return this.userrepo.save(existUser);
+//			
+//			
+//		}
+//		return user;
+//		
+		
+//	}
+	
+
+	public Optional<User> delete(Integer id){
+		Optional<User> user= getById(id);
+		this.userrepo.deleteById(id);
+		return user;
+	}
+	
+	
+	
+
+}
